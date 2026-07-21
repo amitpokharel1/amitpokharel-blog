@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Design tokens — "Ink & Signal"
+   Tech-editorial personal blog: grotesk display, serif reading
+   body, mono metadata, warm paper, deep navy ink, marigold signal
+   ============================================================ */
+:root {
+  --paper: #faf9f5;
+  --paper-2: #f2f1ea;
+  --ink: #16182b;
+  --ink-soft: #3a3c50;
+  --muted: #6a6c7d;
+  --line: #e4e2d8;
+  --signal: #e0982c;      /* marigold accent — used sparingly */
+  --signal-ink: #9a640f;  /* accessible amber for text/links */
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Newsreader", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--signal); color: var(--ink); }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--signal-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Mono eyebrow / metadata label */
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.meta-signal::before {
+  content: "";
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-right: 0.5rem;
+  background: var(--signal);
+  vertical-align: baseline;
+}
+
+/* ============================================================
+   Article body (rendered Portable Text)
+   ============================================================ */
+.article { font-size: 1.16rem; line-height: 1.72; color: var(--ink-soft); }
+.article > * + * { margin-top: 1.4em; }
+.article p { color: var(--ink-soft); }
+.article h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-top: 2.4em;
+  letter-spacing: -0.01em;
+}
+.article h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.32rem;
+  color: var(--ink);
+  margin-top: 2em;
+}
+.article a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.article a:hover { color: var(--signal-ink); }
+.article strong { color: var(--ink); font-weight: 600; }
+.article blockquote {
+  border-left: 3px solid var(--signal);
+  padding-left: 1.25rem;
+  font-style: italic;
+  color: var(--ink);
+}
+.article ul, .article ol { padding-left: 1.4rem; }
+.article ul { list-style: none; }
+.article ul > li { position: relative; }
+.article ul > li::before {
+  content: "";
+  position: absolute;
+  left: -1.15rem;
+  top: 0.72em;
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--signal);
+}
+.article ol { list-style: decimal; }
+.article li + li { margin-top: 0.5em; }
+.article code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--paper-2);
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--line);
+}
+.article figure img { width: 100%; height: auto; }
+.article figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
