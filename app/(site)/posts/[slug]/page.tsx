@@ -39,50 +39,55 @@ export default async function PostPage({ params }: Params) {
   if (!post) notFound();
 
   const cover = post.mainImage
-    ? urlFor(post.mainImage).width(1600).height(900).fit("crop").auto("format").url()
+    ? urlFor(post.mainImage).width(1800).height(1000).fit("crop").auto("format").url()
     : null;
 
   return (
-    <article className="mx-auto max-w-3xl px-5 py-14 md:px-8 md:py-20">
-      <Link
-        href="/blog"
-        className="text-sm text-muted transition-colors hover:text-accent-text"
-      >
-        ← All posts
-      </Link>
+    <article>
+      {/* Headline block */}
+      <div className="mx-auto max-w-[1400px] px-5 pt-12 md:px-10 md:pt-16">
+        <Link href="/blog" className="label text-muted hover:text-signal-deep">
+          ← All writing
+        </Link>
 
-      <header className="mb-10 mt-7">
-        <div className="flex flex-wrap items-center gap-3">
-          <time className="text-sm text-muted" dateTime={isoDate(post.publishedAt)}>
-            {formatDate(post.publishedAt)}
-          </time>
-          {post.tags?.map((tag) => (
-            <span key={tag} className="text-sm text-accent-text">
-              {tag}
-            </span>
-          ))}
+        <div className="section-rule mt-8">
+          <p className="label text-signal-deep">
+            <time dateTime={isoDate(post.publishedAt)}>
+              {formatDate(post.publishedAt)}
+            </time>
+            {post.tags?.length ? ` — ${post.tags.join(", ")}` : ""}
+          </p>
+          <h1 className="display mt-5 max-w-5xl text-[clamp(2.5rem,8vw,6rem)]">
+            {post.title}
+          </h1>
+          {post.excerpt ? (
+            <p className="mt-7 max-w-2xl text-2xl leading-snug text-ink-2">
+              {post.excerpt}
+            </p>
+          ) : null}
         </div>
-        <h1 className="display mt-4 text-4xl sm:text-5xl">{post.title}</h1>
-        {post.excerpt ? (
-          <p className="mt-5 text-xl text-muted">{post.excerpt}</p>
-        ) : null}
-      </header>
+      </div>
 
+      {/* Full-bleed cover */}
       {cover ? (
-        <Image
-          src={cover}
-          alt={post.mainImage?.alt || post.title}
-          width={1600}
-          height={900}
-          priority
-          className="mb-12 h-auto w-full rounded-2xl"
-          sizes="(max-width: 768px) 100vw, 768px"
-        />
+        <div className="relative mt-12 aspect-16/9 w-full md:aspect-21/9">
+          <Image
+            src={cover}
+            alt={post.mainImage?.alt || post.title}
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
       ) : null}
 
+      {/* Body — narrow measure for reading */}
       {post.body ? (
-        <div className="article">
-          <PortableText value={post.body} />
+        <div className="mx-auto max-w-[46rem] px-5 py-16 md:px-0 md:py-24">
+          <div className="article article--lead">
+            <PortableText value={post.body} />
+          </div>
         </div>
       ) : null}
     </article>

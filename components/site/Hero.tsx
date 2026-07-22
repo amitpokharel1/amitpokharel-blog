@@ -8,52 +8,78 @@ export function Hero({ settings }: { settings: Settings | null }) {
   const last = settings?.lastName || "Pokharel";
   const tagline =
     settings?.tagline || "Anchor, Presenter, IT Professional & Data Analyst";
+  const location = settings?.location || "Kathmandu, Nepal";
 
   const portrait = settings?.heroImage
-    ? urlFor(settings.heroImage).width(1000).height(1200).fit("crop").auto("format").url()
+    ? urlFor(settings.heroImage).width(1100).height(1375).fit("crop").auto("format").url()
     : null;
 
   return (
-    <section className="border-b border-line bg-surface-2">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:gap-8 md:px-8 md:py-24">
-        <div>
-          <p className="eyebrow">Hello, I&apos;m</p>
-          <h1 className="display mt-3 text-[3.25rem] leading-[0.95] sm:text-7xl lg:text-8xl">
-            {first}
-            <br />
-            {last}
-          </h1>
-          <p className="mt-6 max-w-md text-lg text-ink-2">{tagline}</p>
+    <section className="border-b-2 border-ink">
+      {/* Dateline band */}
+      <div className="border-b border-rule">
+        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-x-6 gap-y-1 px-5 py-3 md:px-10">
+          <span className="label text-muted">{location}</span>
+          <span className="label text-signal-deep">Portfolio &amp; Writing</span>
+          <span className="label hidden text-muted sm:inline">Issue One</span>
+        </div>
+      </div>
 
-          <div className="mt-9 flex flex-wrap gap-3.5">
-            <Link href="/#contact" className="btn btn-solid">
-              Let&apos;s talk
-            </Link>
-            <Link href="/#work" className="btn btn-outline">
-              My work
-            </Link>
+      <div className="mx-auto max-w-[1400px] px-5 md:px-10">
+        <div className="relative pb-10 pt-10 md:pb-20 md:pt-16">
+          {/* Flat orange field — sits behind the masthead */}
+          <div
+            aria-hidden
+            className="absolute bottom-[16%] left-0 -z-0 hidden h-[42%] w-[64%] bg-signal md:block"
+          />
+
+          <div className="md:grid md:grid-cols-12 md:items-end">
+            {/* Portrait */}
+            <div className="relative z-10 md:col-span-6 md:col-start-7">
+              {portrait ? (
+                <div className="relative aspect-4/5 w-full">
+                  <Image
+                    src={portrait}
+                    alt={settings?.heroImage?.alt || `${first} ${last}`}
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                </div>
+              ) : (
+                <div className="flex aspect-4/5 w-full items-center justify-center border-2 border-dashed border-rule bg-paper-2 p-8">
+                  <p className="label max-w-[15rem] text-center text-muted">
+                    Add a hero portrait — Site settings → Hero
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Masthead — overlaps the orange field and kisses the portrait */}
+            <div className="relative z-20 mt-8 md:absolute md:bottom-[20%] md:left-0 md:mt-0 md:w-[72%]">
+              <h1 className="masthead text-[clamp(3.5rem,15vw,11rem)]">
+                <span className="block">{first}</span>
+                <span className="block">{last}</span>
+              </h1>
+            </div>
+          </div>
+
+          {/* Tagline + actions */}
+          <div className="mt-10 grid gap-8 border-t-2 border-ink pt-7 md:mt-16 md:grid-cols-12">
+            <p className="font-[family-name:var(--font-body)] text-2xl leading-tight md:col-span-7 md:text-[2rem]">
+              {tagline}
+            </p>
+            <div className="flex flex-wrap items-start gap-3 md:col-span-5 md:justify-end">
+              <Link href="/#contact" className="btn btn-solid">
+                Get in touch
+              </Link>
+              <Link href="/#work" className="btn btn-outline">
+                See the work
+              </Link>
+            </div>
           </div>
         </div>
-
-        {portrait ? (
-          <div className="relative aspect-[5/6] w-full overflow-hidden rounded-2xl bg-surface-3">
-            <Image
-              src={portrait}
-              alt={settings?.heroImage?.alt || `${first} ${last}`}
-              fill
-              priority
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
-        ) : (
-          <div className="flex aspect-[5/6] w-full items-center justify-center rounded-2xl border border-dashed border-line bg-surface-3/60 p-8 text-center">
-            <p className="max-w-[16rem] text-sm text-muted">
-              Add a hero portrait in the Studio under{" "}
-              <span className="text-ink">Site settings → Hero</span>.
-            </p>
-          </div>
-        )}
       </div>
     </section>
   );

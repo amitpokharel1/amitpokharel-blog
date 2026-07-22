@@ -1,36 +1,41 @@
 import Link from "next/link";
-import { PostCard } from "./PostCard";
+import { SectionHead } from "./SectionHead";
+import { FeaturedPost, PostRow } from "./PostCard";
 import type { PostListItem } from "@/sanity/lib/queries";
 
 export function BlogPreview({ posts }: { posts: PostListItem[] }) {
+  const [lead, ...rest] = posts;
+
   return (
-    <section className="bg-surface-2">
-      <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
-        <div className="text-center">
-          <p className="eyebrow">Blog</p>
-          <h2 className="display mt-3 text-4xl sm:text-5xl md:text-6xl">
-            Latest writing
-          </h2>
-        </div>
+    <section className="border-b-2 border-ink">
+      <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24">
+        <SectionHead
+          label="Writing"
+          title="Notes & essays"
+          intro="On media, technology, and whatever I'm learning at the moment."
+        />
 
         {posts.length === 0 ? (
-          <p className="mx-auto mt-12 max-w-md rounded-2xl border border-dashed border-line bg-surface p-8 text-center text-sm text-muted">
-            No posts yet. Head to{" "}
-            <Link href="/studio" className="text-accent-text underline">
-              /studio
-            </Link>{" "}
-            to write your first one.
+          <p className="label mt-12 border-2 border-dashed border-rule bg-paper-2 p-8 text-center text-muted">
+            No posts yet — write your first at /studio
           </p>
         ) : (
           <>
-            <div className="mt-14 grid gap-9 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
+            <div className="mt-14">
+              <FeaturedPost post={lead} />
             </div>
-            <div className="mt-14 text-center">
+
+            {rest.length > 0 ? (
+              <div className="mt-14">
+                {rest.map((post) => (
+                  <PostRow key={post._id} post={post} />
+                ))}
+              </div>
+            ) : null}
+
+            <div className="mt-12 border-t-2 border-ink pt-8">
               <Link href="/blog" className="btn btn-solid">
-                Read all posts
+                All writing
               </Link>
             </div>
           </>

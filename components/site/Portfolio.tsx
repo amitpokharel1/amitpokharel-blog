@@ -1,65 +1,74 @@
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
+import { SectionHead } from "./SectionHead";
 import type { Project } from "@/sanity/lib/queries";
 
 export function Portfolio({ projects }: { projects: Project[] }) {
   return (
-    <section id="work" className="scroll-mt-20 bg-surface-2">
-      <div className="mx-auto max-w-6xl px-5 py-20 md:px-8 md:py-28">
-        <div className="text-center">
-          <p className="eyebrow">Portfolio</p>
-          <h2 className="display mt-3 text-4xl sm:text-5xl md:text-6xl">
-            Recent work
-          </h2>
-        </div>
+    <section id="work" className="scroll-mt-4 border-b-2 border-ink">
+      <div className="mx-auto max-w-[1400px] px-5 py-16 md:px-10 md:py-24">
+        <SectionHead label="Selected work" title="Things I've made" />
 
         {projects.length === 0 ? (
-          <p className="mx-auto mt-12 max-w-md rounded-2xl border border-dashed border-line bg-surface p-8 text-center text-sm text-muted">
-            No projects yet. Add them in the Studio under{" "}
-            <span className="text-ink">Projects</span> — real work only, no
-            stock photos.
+          <p className="label mt-12 border-2 border-dashed border-rule bg-paper-2 p-8 text-center text-muted">
+            No projects yet — add them under Projects in the Studio
           </p>
         ) : (
-          <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => {
+          <ul className="mt-14">
+            {projects.map((project, i) => {
               const src = urlFor(project.image)
-                .width(900)
-                .height(700)
+                .width(1200)
+                .height(820)
                 .fit("crop")
                 .auto("format")
                 .url();
 
-              const card = (
-                <>
-                  <div className="relative aspect-[9/7] w-full overflow-hidden bg-surface-3">
+              // Alternate which side the image sits on
+              const flip = i % 2 === 1;
+
+              const inner = (
+                <div className="grid items-center gap-6 md:grid-cols-12 md:gap-10">
+                  <div
+                    className={`relative aspect-3/2 w-full overflow-hidden md:col-span-7 ${
+                      flip ? "md:order-2 md:col-start-6" : ""
+                    }`}
+                  >
                     <Image
                       src={src}
                       alt={project.image?.alt || project.title}
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                      sizes="(max-width: 768px) 100vw, 58vw"
                     />
                   </div>
-                  <div className="p-5">
+
+                  <div className={`md:col-span-5 ${flip ? "md:order-1" : ""}`}>
                     {project.category ? (
-                      <p className="text-sm text-accent-text">
+                      <p className="label text-signal-deep">
                         {project.category}
                       </p>
                     ) : null}
-                    <h3 className="display mt-1 text-xl">{project.title}</h3>
+                    <h3 className="display mt-3 text-[clamp(1.9rem,4vw,3rem)]">
+                      {project.title}
+                    </h3>
                     {project.description ? (
-                      <p className="mt-2 text-sm text-ink-2">
+                      <p className="mt-4 text-lg text-ink-2">
                         {project.description}
                       </p>
                     ) : null}
+                    {project.url ? (
+                      <p className="label mt-6 inline-block border-b-2 border-signal pb-1">
+                        View project →
+                      </p>
+                    ) : null}
                   </div>
-                </>
+                </div>
               );
 
               return (
                 <li
                   key={project._id}
-                  className="group overflow-hidden rounded-2xl bg-surface"
+                  className="group border-t border-rule py-10 first:border-t-0 first:pt-0 md:py-14"
                 >
                   {project.url ? (
                     <a
@@ -68,10 +77,10 @@ export function Portfolio({ projects }: { projects: Project[] }) {
                       rel="noopener noreferrer"
                       className="block"
                     >
-                      {card}
+                      {inner}
                     </a>
                   ) : (
-                    card
+                    inner
                   )}
                 </li>
               );

@@ -1,7 +1,5 @@
 import type { Social } from "@/sanity/lib/queries";
 
-// Simple label pills — no icon library needed, and they stay readable
-// whatever platform you add later.
 export function SocialLinks({
   socials,
   variant = "light",
@@ -12,12 +10,10 @@ export function SocialLinks({
   const items = (socials ?? []).filter((s) => s.url && s.platform);
   if (items.length === 0) return null;
 
-  const base =
-    "inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-[family-name:var(--font-display)] transition-colors";
   const styles =
     variant === "dark"
-      ? "border-white/25 text-white/85 hover:border-accent hover:text-accent"
-      : "border-line text-ink-2 hover:border-accent hover:text-accent-text";
+      ? "border-white/30 text-white hover:bg-signal hover:border-signal hover:text-ink"
+      : "border-ink text-ink hover:bg-signal hover:border-signal";
 
   return (
     <ul className="flex flex-wrap gap-2.5">
@@ -27,7 +23,7 @@ export function SocialLinks({
             href={s.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${base} ${styles}`}
+            className={`label inline-block border-2 px-4 py-2 transition-colors ${styles}`}
           >
             {s.platform}
           </a>
