@@ -1,11 +1,16 @@
-# Amit Pokharel — Blog
+# Amit Pokharel — Personal Site
 
-A personal blog built with **Next.js** (the site) and **Sanity** (your visual
-writing dashboard, embedded at `/studio`). You write posts in a friendly
-dashboard on your own domain; the site renders them fast.
+Your full personal site, rebuilt in **Next.js** with **Sanity** as your visual
+editing dashboard at `/studio`. Replaces the WordPress site.
 
-You do **not** need to touch any code or use a terminal. Everything below is
-done in your web browser. Total time: about 20–30 minutes.
+**Pages:** Home (hero, about, portfolio, testimonials, latest posts),
+Blog listing, individual post pages, and a 404.
+
+**Everything is editable without code** — your name, tagline, bio, photos,
+CV link, projects, testimonials, contact details, and blog posts all live in
+the Studio.
+
+You do **not** need to touch any code or use a terminal. Total time: 20–30 min.
 
 ---
 
@@ -102,14 +107,23 @@ that address.
 
 ---
 
-## Step 6 — Write your first post ✍️
+## Step 6 — Fill in your content ✍️
 
-1. Go to **`amitpokharel.com/studio`** (or the `.vercel.app/studio` URL while
-   DNS is still propagating).
-2. Sign in with the same Sanity account.
-3. Click **Post → Create new**, fill in the title, cover image, and body,
-   then click **Publish**.
-4. Refresh your homepage — the post appears instantly. 🎉
+Go to **`amitpokharel.com/studio`** (or the `.vercel.app/studio` URL while DNS
+is still propagating) and sign in with your Sanity account.
+
+Work through these in order:
+
+1. **Site settings** — your name, tagline, hero portrait, bio, about photo,
+   years of experience, CV link, contact details, and social links.
+2. **Projects** — your real work. Each needs a title, image, and optionally a
+   category, description, and link. *Skip the stock photos* — a smaller set of
+   real work beats six generic laptop pictures.
+3. **Testimonials** — only real feedback from real people. If you have none
+   yet, leave it empty and the section hides itself automatically.
+4. **Blog posts** — title, cover image, body, tags. Click **Publish**.
+
+Your site updates within about a minute of publishing.
 
 ---
 
@@ -122,8 +136,16 @@ that address.
 ## Where things live (for reference)
 
 ```
-app/(site)/            The public website (home + post pages)
-app/studio/            Your embedded writing dashboard
-sanity/schemaTypes/    What fields a post has (title, cover, body, tags…)
+app/(site)/            The public site (home, blog, post pages)
+app/studio/            Your editing dashboard
+components/site/       Homepage sections (hero, about, portfolio, etc.)
+sanity/schemaTypes/    What fields each content type has
 app/globals.css        Colors, fonts, and styling
 ```
+
+## A note on your old WordPress site
+
+Once you point amitpokharel.com at Vercel (Step 4), this new site replaces the
+WordPress one. Before you switch, save anything you want to keep — especially
+the text of your two existing posts ("Good Morning from Kathmandu!" and
+"Hello world!"), which you can paste into the Studio as new posts.

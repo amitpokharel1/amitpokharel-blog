@@ -3,17 +3,17 @@ import "./globals.css";
 
 const SITE_NAME = "Amit Pokharel";
 const SITE_DESCRIPTION =
-  "Writing on technology, security, and building things — by Amit Pokharel.";
+  "Amit Pokharel — news anchor, presenter, and IT professional based in Kathmandu. Writing on media, technology, and security.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://amitpokharel.com"),
   title: {
-    default: `${SITE_NAME} — Writing`,
+    default: `${SITE_NAME} — Anchor, Presenter & IT Professional`,
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   openGraph: {
-    title: `${SITE_NAME} — Writing`,
+    title: `${SITE_NAME} — Anchor, Presenter & IT Professional`,
     description: SITE_DESCRIPTION,
     url: "https://amitpokharel.com",
     siteName: SITE_NAME,
@@ -34,7 +34,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
       </head>

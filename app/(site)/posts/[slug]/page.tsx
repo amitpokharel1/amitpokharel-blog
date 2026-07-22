@@ -3,11 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import {
-  POST_QUERY,
-  SLUGS_QUERY,
-  type Post,
-} from "@/sanity/lib/queries";
+import { POST_QUERY, SLUGS_QUERY, type Post } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { PortableText } from "@/components/PortableText";
 import { formatDate, isoDate } from "@/lib/date";
@@ -47,28 +43,26 @@ export default async function PostPage({ params }: Params) {
     : null;
 
   return (
-    <article>
+    <article className="mx-auto max-w-3xl px-5 py-14 md:px-8 md:py-20">
       <Link
-        href="/"
-        className="meta transition-colors hover:text-signal-ink"
+        href="/blog"
+        className="text-sm text-muted transition-colors hover:text-accent-text"
       >
-        ← Back to writing
+        ← All posts
       </Link>
 
-      <header className="mb-10 mt-8">
-        <div className="flex flex-wrap items-baseline gap-3">
-          <time className="meta meta-signal" dateTime={isoDate(post.publishedAt)}>
+      <header className="mb-10 mt-7">
+        <div className="flex flex-wrap items-center gap-3">
+          <time className="text-sm text-muted" dateTime={isoDate(post.publishedAt)}>
             {formatDate(post.publishedAt)}
           </time>
           {post.tags?.map((tag) => (
-            <span key={tag} className="meta text-signal-ink">
-              / {tag}
+            <span key={tag} className="text-sm text-accent-text">
+              {tag}
             </span>
           ))}
         </div>
-        <h1 className="mt-4 font-[family-name:var(--font-display)] text-4xl font-semibold leading-[1.1] tracking-tight text-ink md:text-5xl">
-          {post.title}
-        </h1>
+        <h1 className="display mt-4 text-4xl sm:text-5xl">{post.title}</h1>
         {post.excerpt ? (
           <p className="mt-5 text-xl text-muted">{post.excerpt}</p>
         ) : null}
@@ -77,13 +71,11 @@ export default async function PostPage({ params }: Params) {
       {cover ? (
         <Image
           src={cover}
-          alt={
-            (post.mainImage as { alt?: string })?.alt || post.title
-          }
+          alt={post.mainImage?.alt || post.title}
           width={1600}
           height={900}
           priority
-          className="mb-12 h-auto w-full"
+          className="mb-12 h-auto w-full rounded-2xl"
           sizes="(max-width: 768px) 100vw, 768px"
         />
       ) : null}

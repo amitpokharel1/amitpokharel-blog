@@ -10,14 +10,34 @@ import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { schema } from "@/sanity/schemaTypes";
 
 export default defineConfig({
-  name: "amitpokharel-blog",
-  title: "Amit Pokharel — Writing",
+  name: "amitpokharel-site",
+  title: "Amit Pokharel",
   basePath: "/studio",
   projectId,
   dataset,
   schema,
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title("Content")
+          .items([
+            // Site settings is a single document, not a list
+            S.listItem()
+              .title("Site settings")
+              .id("siteSettings")
+              .child(
+                S.document()
+                  .schemaType("siteSettings")
+                  .documentId("siteSettings")
+                  .title("Site settings"),
+              ),
+            S.divider(),
+            S.documentTypeListItem("post").title("Blog posts"),
+            S.documentTypeListItem("project").title("Projects"),
+            S.documentTypeListItem("testimonial").title("Testimonials"),
+          ]),
+    }),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
 });
